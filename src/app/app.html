@@ -1,3 +1,14 @@
-<h1>Hello Arjun 🚀</h1>
-<p>Angular Day 1 Started</p>
+<h1>Learning Angular</h1>
 
+<ul>
+    <li *ngFor="let product of products;let i = index; let f = first ; let l = last" 
+    (click)="selectItem(i)"
+    [style.background]="i === selectedIndex ? 'yellow' : ''"
+    [style.color]="l? 'red' : 'black' "
+    [style.fontWeight]="f? 'bold' : 'normal' "
+    >
+    {{ i }} - {{ product }}
+    <button (click)="deleteItem(i)">delete</button>
+
+    </li>
+</ul>
