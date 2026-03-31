@@ -1,4 +1,12 @@
 
 <h1>Hello</h1>
 
+<app-todo-input (add)="addTodo($event)"></app-todo-input>
+
+<app-todo-list 
+[todos]="todos"
+(delete)="deleteTodo($event)">
+
+</app-todo-list>
+
 

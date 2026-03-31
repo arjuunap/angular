@@ -1,1 +1,7 @@
-<p>todo-list works!</p>
+<ul style="list-style-type: none;">
+    <app-todo-item
+    *ngFor="let todo of todos; let i = index"
+    [todo]="todo"
+    (delete)="remove(i)">
+</app-todo-item>
+</ul>
