@@ -1,12 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+</head>
+<body>
 
-<h1>Hello</h1>
+    <input [(ngModel)]="newTodo" placeholder="Enter todo">
+    <button (click)="addTodo()">Add</button>
 
-<app-todo-input (add)="addTodo($event)"></app-todo-input>
+    <ul>
+        <li *ngFor="let todo of todos$ | async; let i = index">
+            <span
+            (click)="toggleTodo(i)"
+            [style.textDecoration]="todo.completed?  'line-through' : 'none'">
+             {{todo.title}}
+            </span>
+          <button (click)="deleteTodo(i)">Delete</button>
+        </li>
+    </ul>
 
-<app-todo-list 
-[todos]="todos"
-(delete)="deleteTodo($event)">
-
-</app-todo-list>
-
-
+    
+    
+</body>
+</html>
