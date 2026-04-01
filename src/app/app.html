@@ -1,27 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo</title>
-</head>
-<body>
+<nav style="display: flex; gap: 20px;">
+    <a routerLink="/">Home</a>
+    <a routerLink="/products">Products</a>
+</nav>
 
-    <input [(ngModel)]="newTodo" placeholder="Enter todo">
-    <button (click)="addTodo()">Add</button>
+<hr>
 
-    <ul>
-        <li *ngFor="let todo of todos$ | async; let i = index">
-            <span
-            (click)="toggleTodo(i)"
-            [style.textDecoration]="todo.completed?  'line-through' : 'none'">
-             {{todo.title}}
-            </span>
-          <button (click)="deleteTodo(i)">Delete</button>
-        </li>
-    </ul>
-
-    
-    
-</body>
-</html>
+<router-outlet></router-outlet>
