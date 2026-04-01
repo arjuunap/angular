@@ -1,8 +1,216 @@
-<nav style="display: flex; gap: 20px;">
-    <a routerLink="/">Home</a>
-    <a routerLink="/products">Products</a>
-</nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Signup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<hr>
+    :root {
+      --bg:          #0a0a0a;
+      --card:        #111111;
+      --card-border: #2a2a2a;
+      --input-bg:    #161616;
+      --input-border:#3a3a3a;
+      --input-focus: #c8ff00;
+      --accent:      #c8ff00;
+      --accent-glow: rgba(200,255,0,0.1);
+      --text:        #efefef;
+      --muted:       #555555;
+      --error:       #ff5370;
+    }
 
-<router-outlet></router-outlet>
+    body {
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* Card */
+    .signup-container {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 40px 36px 36px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+      animation: rise 0.5s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    /* Field */
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    /* Input — border always visible */
+    .field input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      caret-color: var(--accent);
+    }
+
+    .field input::placeholder {
+      color: #404040;
+    }
+
+    .field input:hover {
+      border-color: #555;
+    }
+
+    .field input:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    /* Error */
+    .field small {
+      display: block;
+      font-size: 11px;
+      color: var(--error);
+      margin-top: 5px;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--card-border);
+      margin: 24px 0;
+    }
+
+    /* Button */
+    button {
+      width: 100%;
+      padding: 13px;
+      background: var(--accent);
+      color: #0a0a0a;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.2;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="signup-container">
+
+    <h2>Signup Form 🔐</h2>
+    <p class="sub">Create your account below</p>
+
+    <form [formGroup]="signupForm">
+
+      <!-- Username -->
+      <div class="field">
+        <label>Username</label>
+        <input type="text" placeholder="Enter username" formControlName="username">
+        <div *ngIf="username?.touched && username?.invalid">
+          <small *ngIf="username?.errors?.['required']">Username is required</small>
+          <small *ngIf="username?.errors?.['minlength']">Min 8 characters</small>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="field">
+        <label>Email</label>
+        <input type="text" placeholder="you@example.com" formControlName="email">
+        <div *ngIf="email?.touched && email?.invalid">
+          <small *ngIf="email?.errors?.['required']">Email is required</small>
+          <small *ngIf="email?.errors?.['email']">Enter valid email</small>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <label>Password</label>
+        <input type="password" placeholder="Enter your password" formControlName="password">
+        <div *ngIf="password?.touched && password?.invalid">
+          <small *ngIf="password?.errors?.['required']">Password required</small>
+          <small *ngIf="password?.errors?.['minlength']">Min 8 characters</small>
+          <small *ngIf="password?.errors?.['pattern']">Must include uppercase, lowercase, number & symbol</small>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="field">
+        <label>Confirm Password</label>
+        <input type="password" placeholder="Confirm password" formControlName="confirmPassword">
+        <div *ngIf="confirmPassword?.touched && signupForm.errors?.['passwordMismatch']">
+          <small>Password does not match</small>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <button type="button" (click)="onSubmit()" >
+        <!-- [disabled]="signupForm.invalid" -->
+        Signup
+      </button>
+
+    </form>
+
+  </div>
+
+</body>
+</html>
