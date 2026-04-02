@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signup</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
-      --bg:          #0a0a0a;
-      --card:        #111111;
+      --bg: #0a0a0a;
+      --card: #111111;
       --card-border: #2a2a2a;
-      --input-bg:    #161616;
-      --input-border:#3a3a3a;
+      --input-bg: #161616;
+      --input-border: #3a3a3a;
       --input-focus: #c8ff00;
-      --accent:      #c8ff00;
-      --accent-glow: rgba(200,255,0,0.1);
-      --text:        #efefef;
-      --muted:       #555555;
-      --error:       #ff5370;
+      --accent: #c8ff00;
+      --accent-glow: rgba(200, 255, 0, 0.1);
+      --text: #efefef;
+      --muted: #555555;
+      --error: #ff5370;
     }
 
     body {
@@ -39,13 +47,20 @@
       border: 1px solid var(--card-border);
       border-radius: 16px;
       padding: 40px 36px 36px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
-      animation: rise 0.5s cubic-bezier(0.22,1,0.36,1) both;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+      animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     @keyframes rise {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h2 {
@@ -100,9 +115,13 @@
       border-color: #555;
     }
 
+    /* .field input{
+      border: 1px rgb(224, 215, 215) solid;
+    } */
     .field input:focus {
       border-color: var(--input-focus);
       box-shadow: 0 0 0 3px var(--accent-glow);
+      border: 1px rgb(224, 215, 215) solid;
     }
 
     /* Error */
@@ -120,12 +139,17 @@
       margin: 24px 0;
     }
 
+
+
     /* Button */
     button {
+
       width: 100%;
+
       padding: 13px;
-      background: var(--accent);
-      color: #0a0a0a;
+      /* background: var(--accent); */
+      background-color: black;
+      color: #ffffff;
       border: none;
       border-radius: 8px;
       font-family: 'Syne', sans-serif;
@@ -150,32 +174,34 @@
       opacity: 0.2;
       cursor: not-allowed;
     }
-    .er{
-        color: red;
+
+    .er {
+      color: red;
     }
-    
   </style>
 </head>
+
 <body>
 
   <div class="signup-container">
+    <h2>Signup 🔐</h2>
 
-    <h2>Signup Form 🔐</h2>
     <p class="sub">Create your account below</p>
 
     <form [formGroup]="signupForm">
 
-      <!-- Username -->
+      <!-- username -->
       <div class="field">
         <label>Username</label>
         <input type="text" placeholder="Enter username" formControlName="username">
         <div class="er" *ngIf="username?.touched && username?.invalid">
-          <small  *ngIf="username?.errors?.['required']">Username is required</small>
-          <small *ngIf="username?.errors?.['minlength']">Min 8 characters</small>
+          <small *ngIf="username?.errors?.['required']">Username is required</small>
+          <small *ngIf="username?.errors?.['minlength']">Min 8 Characters</small>
         </div>
       </div>
 
-      <!-- Email -->
+
+      <!-- email -->
       <div class="field">
         <label>Email</label>
         <input type="text" placeholder="you@example.com" formControlName="email">
@@ -185,7 +211,9 @@
         </div>
       </div>
 
-      <!-- Password -->
+
+
+      <!-- password -->
       <div class="field">
         <label>Password</label>
         <input type="password" placeholder="Enter your password" formControlName="password">
@@ -196,25 +224,35 @@
         </div>
       </div>
 
+
       <!-- Confirm Password -->
       <div class="field">
-        <label>Confirm Password</label>
+        <label>Confirm password</label>
         <input type="password" placeholder="Confirm password" formControlName="confirmPassword">
-        <div class="er" *ngIf="confirmPassword?.touched && signupForm.errors?.['passwordMismatch']">
+        <div class="er" *ngIf="confirmPassword?.touched && signupForm.errors?.['passwordWrong']">
           <small>Password does not match</small>
         </div>
       </div>
 
+
+
       <div class="divider"></div>
 
-      <button type="button" (click)="onSubmit()" >
-        <!-- [disabled]="signupForm.invalid" -->
+      <button type="button" (click)="onSubmit()" [disabled]="signupForm.invalid">
         Signup
       </button>
+
+
+
 
     </form>
 
   </div>
 
+
+
+
+
 </body>
+
 </html>

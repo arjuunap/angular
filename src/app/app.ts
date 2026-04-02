@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl  } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
 
@@ -7,17 +7,21 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
 
-  
+
+
+
+export class App {
+  showPassword = false;
+
   signupForm = new FormGroup({
     username: new FormControl('', [
       Validators.required,
-      Validators.minLength(8)
+      Validators.minLength(8),
     ]),
 
     email: new FormControl('', [
@@ -31,19 +35,18 @@ export class App {
       Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/)
     ]),
 
-    confirmPassword: new FormControl('', Validators.required)
+    confirmPassword: new FormControl('', [
+      Validators.required
+    ])
+  }, { validators: this.checkPassword });
 
-  }, { validators: this.passwordMatchValidator }); // ✅ custom validator
-
-  // 🔥 Custom Validator (VERY IMPORTANT)
-  passwordMatchValidator(form: AbstractControl) {
+  checkPassword(form: AbstractControl) {
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
 
-    return password === confirmPassword ? null : { passwordMismatch: true };
+    return password === confirmPassword ? null : { passwordWrong: true }
   }
 
-  // ✅ getters
   get username() {
     return this.signupForm.get('username');
   }
@@ -57,15 +60,14 @@ export class App {
   }
 
   get confirmPassword() {
-    return this.signupForm.get('confirmPassword');
+    return this.signupForm.get('confirmPassword')
   }
 
   onSubmit() {
     if (this.signupForm.valid) {
-      console.log(this.signupForm.value);
+      console.log(this.signupForm.value)
     }
   }
+  
+
 }
-
-
-
